@@ -44,8 +44,6 @@ Respuesta:
 {"estado_predicho": "sobrecalentamiento", "confianza": 0.997}
 ```
 
-La temperatura cerca de 88 °C y el reloj bajando a ~2100 MHz (throttling) son la firma del sobrecalentamiento.
-
 ## Correr local (desarrollo)
 
 ```powershell
@@ -137,11 +135,7 @@ Se compararon 4 modelos con **GroupKFold por episodio** (5 particiones): las ven
 
 ![Matrices de confusión](reports/matrices_confusion.png)
 
-Gradient Boosting confunde 3 ventanas `normal` con `degradacion_memoria`: esos dos estados solo se diferencian en los errores ECC.
-
 **Modelo final: regresión logística.** Empata en 100% con el árbol y Random Forest, sin errores en la matriz de confusión. Es el más simple de los tres, es rápido, y sus coeficientes muestran qué feature empuja hacia cada estado. Va con `StandardScaler` en el mismo pipeline porque la regresión logística es sensible a la escala (el reloj está en miles y los ECC entre 0 y 5).
-
-**¿Qué delata la falla de alimentación?** La **desviación del reloj** (`clock_mhz_std`), que tiene el coeficiente más alto hacia `falla_alimentacion` (0.43), seguida de las desviaciones de potencia y temperatura. Sin alimentación estable, el reloj no puede sostener la frecuencia y salta de un valor a otro.
 
 ## Validación
 
@@ -166,4 +160,4 @@ Ejemplos de cómo responde la API:
 
 - **Tests:** `tests/test_schema.py` comprueba que el contrato descarta nulos, potencias negativas, ECC negativos, estados inválidos y Fahrenheit, y que falla si falta o sobra una columna. `tests/test_api.py` comprueba las respuestas 200 y 422 de la API.
 - **Fahrenheit:** una GPU a 55 °C son 131 °F, fuera del rango 0–110. Al entrenar, pandera descarta esas filas y el entrenamiento se detiene; en la API, la ventana responde 422.
-- **Ventana de 3 lecturas:** se rechaza porque con tan pocos datos la desviación no es confiable, y la desviación es justo lo que delata la falla de alimentación.
+- **Ventana de 3 lecturas:** se rechaza porque con tan pocos datos la desviación no es confiable, y la desviación es justo lo que delata la falla de alimentación
