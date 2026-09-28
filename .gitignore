@@ -1,0 +1,12 @@
+# entorno virtual
+.venv/
+
+# archivos de Python
+__pycache__/
+*.pyc
+
+# checkpoints de Jupyter
+.ipynb_checkpoints/
+
+# archivo de respuestas del profesor (no se sube)
+respuestas_ocultas*.csv
