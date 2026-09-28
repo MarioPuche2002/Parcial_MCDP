@@ -1,0 +1,12 @@
+.git
+.venv
+__pycache__
+.ipynb_checkpoints
+.pytest_cache
+data/
+notebooks/
+reports/
+scripts/
+tests/
+pytest.ini
+README.md
