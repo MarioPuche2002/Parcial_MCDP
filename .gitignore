@@ -8,5 +8,5 @@ __pycache__/
 # checkpoints de Jupyter
 .ipynb_checkpoints/
 
-# archivo de respuestas del profesor (no se sube)
-respuestas_ocultas*.csv
+# cache de pytest
+.pytest_cache/
